@@ -31,6 +31,10 @@ interface WorkspaceShellProps {
   unreadMessageCount: number;
   toastMessage: string | null;
   onResetDemoData: () => void;
+  syncStatus: 'saving' | 'saved' | 'error';
+  syncError: string | null;
+  onRetrySync: () => void;
+  onSignOut: () => void;
   children: React.ReactNode;
 }
 
@@ -48,6 +52,10 @@ export const WorkspaceShell: React.FC<WorkspaceShellProps> = ({
   unreadMessageCount,
   toastMessage,
   onResetDemoData,
+  syncStatus,
+  syncError,
+  onRetrySync,
+  onSignOut,
   children,
 }) => {
   const personaMeta: Record<
@@ -285,6 +293,36 @@ export const WorkspaceShell: React.FC<WorkspaceShellProps> = ({
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center gap-2 text-[11px] text-slate-500" aria-live="polite">
+              <span
+                className={`h-2 w-2 rounded-full ${
+                  syncStatus === 'error'
+                    ? 'bg-red-500'
+                    : syncStatus === 'saving'
+                    ? 'bg-amber-500'
+                    : 'bg-emerald-500'
+                }`}
+              />
+              <span title={syncError ?? undefined}>
+                {syncStatus === 'saving'
+                  ? 'Saving demo data…'
+                  : syncStatus === 'error'
+                  ? 'Save failed'
+                  : 'Demo data saved'}
+              </span>
+              {syncStatus === 'error' && (
+                <button type="button" className="font-semibold text-blue-700 underline" onClick={onRetrySync}>
+                  Retry
+                </button>
+              )}
+            </div>
+            <button
+              type="button"
+              onClick={onSignOut}
+              className="rounded-lg border border-[#e2e8f0] px-3 py-1.5 text-xs font-semibold text-[#45474c] hover:bg-[#f8f9ff]"
+            >
+              Sign out
+            </button>
             {/* Mobile Persona Quick Select */}
             <select
               aria-label="Switch workspace persona"

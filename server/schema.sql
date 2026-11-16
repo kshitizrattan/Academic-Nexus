@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS demo_workspaces (
+  workspace_id UUID PRIMARY KEY,
+  state JSONB NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);

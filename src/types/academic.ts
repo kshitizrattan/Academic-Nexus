@@ -159,3 +159,13 @@ export interface FacultyMessage {
   timestamp: string;
   unread: boolean;
 }
+
+export interface DemoWorkspaceState {
+  departments: DepartmentSummary[];
+  approvals: CurriculumApproval[];
+  courses: CourseRecord[];
+  units: CurriculumUnit[];
+  submissions: StudentSubmission[];
+  students: RosterStudent[];
+  messages: FacultyMessage[];
+}
